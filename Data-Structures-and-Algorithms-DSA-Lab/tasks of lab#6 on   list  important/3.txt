@@ -1,0 +1,211 @@
+#include<iostream>
+using namespace std;
+class  node{
+public:
+	string name; 
+	int  priorty;
+	node* next; 
+};
+
+class apoint_booking {
+private :  
+   node* head;
+   string  book_nmae;
+
+public: 
+	apoint_booking(string b){
+     book_nmae = b;	 
+	}
+
+	void Add_new_patient(string n, int p) {
+		node* curr = head;
+		node* temp = new node;
+		temp->priorty = p;
+		temp->name = n;
+		temp->next;
+		if ( head == NULL|| p > head->priorty){
+			cout << " empty  "<< endl; 
+			temp->next = head;
+			head = temp;
+		}
+		else {
+			node* curr =head;
+			while(curr->next!=NULL && curr->next->priorty >= p){
+
+				curr = curr->next;
+			}
+			temp->next = curr->next;
+			curr ->next = temp;
+
+		}
+	}
+
+	void remove_the_patient(string n ) {
+	
+		node* curr = head;
+
+		if (head == NULL ){
+			cout << "Empty" << endl; 
+			return;
+		} 
+		//  if  there is only one node 
+		if (curr->name == n) {
+			node* temp = head;
+			curr = curr->next;
+			delete temp;
+			return;
+		}
+		else{
+			while (curr ->next!=NULL){
+
+				if (curr->name == n ) {
+					node* temp = curr;
+					curr = curr->next;
+					delete temp;
+					break;
+				}
+				curr = curr->next;
+			}
+		}
+    }
+
+	int dispaly_and_count (){
+		node* curr = head;
+		int  count = 0; 
+		if ( curr==NULL){
+			cout << " queue is empty  " << endl; 
+			return 0;  
+		}
+		else {
+			while (curr->next != NULL) {
+
+				cout << "  this is the name : "<< curr->name <<  "priorty : "<< curr->priorty << endl;
+				count++;
+				curr = curr->next;
+			  }
+			count += 1;
+			return  count; 
+		}
+	}
+
+};
+
+
+
+
+int main() {
+
+
+	apoint_booking b("alchemist");
+
+	apoint_booking b2("atomic habits");
+
+	b.Add_new_patient("taha", 10);
+	b.Add_new_patient("ali", 20);
+	b.Add_new_patient("alijan",40);
+	b.dispaly_and_count();
+	cout << "  ---------------------- " << endl; 
+	b.remove_the_patient("ali");
+	b.dispaly_and_count();
+	cout << "  ---------------------- " << endl;
+	b.Add_new_patient("ali",30);
+	b.dispaly_and_count();
+	cout << "  ---------------------- " << endl;
+	return  0; 
+}
+
+#include<iostream>
+#include<string>
+using namespace std;
+
+class node {
+public:
+    string name;
+    node* next;
+};
+
+class patient_list {
+private:
+    node* head;
+public:
+    patient_list() {
+        head = NULL;
+    }
+
+    void addPatient(string n) {
+        node* newnode = new node;
+        newnode->name = n;
+        newnode->next = NULL;
+
+        if (head == NULL) {
+            head = newnode;
+        } else {
+            node* temp = head;
+            while (temp->next != NULL) {
+                temp = temp->next;
+            }
+            temp->next = newnode;
+        }
+    }
+
+    void removePatient(string n) {
+        if (head == NULL) return;
+
+        if (head->name == n) {
+            node* temp = head;
+            head = head->next;
+            delete temp;
+            return;
+        }
+
+        node* pre = head;
+        node* curr = head->next;
+
+        while (curr != NULL) {
+            if (curr->name == n) {
+                pre->next = curr->next;
+                delete curr;
+                return;
+            }
+            pre = curr;
+            curr = curr->next;
+        }
+    }
+
+    void display() {
+        node* temp = head;
+        while (temp != NULL) {
+            cout << temp->name << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
+    int countPatients() {
+        int c = 0;
+        node* temp = head;
+        while (temp != NULL) {
+            c++;
+            temp = temp->next;
+        }
+        return c;
+    }
+};
+
+int main() {
+    patient_list p;
+
+    p.addPatient("Ali");
+    p.addPatient("Ahmed");
+    p.addPatient("Sara");
+
+    p.display();
+    cout << p.countPatients() << endl;
+
+    p.removePatient("Ahmed");
+
+    p.display();
+    cout << p.countPatients() << endl;
+
+    return 0;
+}

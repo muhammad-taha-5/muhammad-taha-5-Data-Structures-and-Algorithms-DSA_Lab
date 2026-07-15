@@ -1,0 +1,20 @@
+#include<iostream>  
+using namespace std; 
+
+int sum(int arr[] ,int s ){
+  int su  =0;
+ if( arr[s] == arr[0]){
+    return 0;
+ }
+     return su = arr[s-1] + sum( arr , s-1);
+}   
+
+ int  main (){
+int  arr[5] {1,2,3,4,5};
+ int size = 5;  
+cout  <<"sum  : "<< sum(arr , size )<<endl;
+
+return 0;
+ }
+
+

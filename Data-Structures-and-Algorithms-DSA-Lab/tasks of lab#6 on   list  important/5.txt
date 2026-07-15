@@ -1,0 +1,125 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+class node {
+public:
+    string name;
+    int priority;
+    node* next;
+};
+
+class book {
+private:
+    node* head;
+    string bookname;
+public:
+    book(string n) {
+        head = NULL;
+        bookname = n;
+    }
+
+    void addStudent(string n, int p) {
+        node* newnode = new node;
+        newnode->name = n;
+        newnode->priority = p;
+        newnode->next = NULL;
+
+        if (head == NULL || p > head->priority) {
+            newnode->next = head;
+            head = newnode;
+        } else {
+            node* temp = head;
+            while (temp->next != NULL && temp->next->priority >= p) {
+                temp = temp->next;
+            }
+            newnode->next = temp->next;
+            temp->next = newnode;
+        }
+    }
+
+    void removeStudent(string n) {
+        if (head == NULL) return;
+
+        if (head->name == n) {
+            node* temp = head;
+            head = head->next;
+            delete temp;
+            return;
+        }
+
+        node* pre = head;
+        node* curr = head->next;
+
+        while (curr != NULL) {
+            if (curr->name == n) {
+                pre->next = curr->next;
+                delete curr;
+                return;
+            }
+            pre = curr;
+            curr = curr->next;
+        }
+    }
+
+    void updatePriority(string n, int p) {
+        removeStudent(n);
+        addStudent(n, p);
+    }
+
+    void serveStudent() {
+        if (head == NULL) return;
+
+        node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+
+    void display() {
+        node* temp = head;
+        cout << bookname << ": ";
+        while (temp != NULL) {
+            cout << temp->name << "(" << temp->priority << ") ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
+    int count() {
+        int c = 0;
+        node* temp = head;
+        while (temp != NULL) {
+            c++;
+            temp = temp->next;
+        }
+        return c;
+    }
+};
+
+int main() {
+
+    book b1("OOP");
+    book b2("DSA");
+
+    b1.addStudent("Ali", 2);
+    b1.addStudent("Ahmed", 3);
+    b1.addStudent("Sara", 1);
+
+    b2.addStudent("Usman", 1);
+    b2.addStudent("Zara", 2);
+
+    b1.display();
+    b2.display();
+
+    b1.updatePriority("Sara", 4);
+
+    b1.display();
+
+    b1.serveStudent();
+
+    b1.display();
+
+    cout << b1.count() << endl;
+
+    return 0;
+}

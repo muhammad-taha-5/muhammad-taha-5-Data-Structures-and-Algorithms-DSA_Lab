@@ -1,0 +1,29 @@
+
+#include<iostream> 
+using  namespace  std;  
+  bool isPalindrome(string str,int l,int r){
+     if(l >= r){
+      return true;
+     }
+
+     if (str[l] !=str[r] ){
+         return false;
+     }
+
+    return isPalindrome(str,l+1,r-1);
+  }
+  
+int main(){
+    string str;
+     cout<<" enter the string "<< endl; 
+     cin  >> str;
+      int r = str.length();
+      int  l = 0; 
+ if(isPalindrome( str,  l,  r-1)){
+     cout<<"Palindrome";
+ }
+ else{
+     cout<<"not";
+ }
+return 0; 
+  }
